@@ -1,6 +1,11 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from django.core.files.uploadedfile import SimpleUploadedFile
+import django.core.files
+import os
+import TutoBasics
+from uploadfiles.forms import UploadFileForm
 
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
@@ -20,8 +25,14 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Data Loader', header_text)
 
         #She is invited to select a file from her computer
-        element = self.browser.find_element_by_id('SubirCSV')
-        element.sendKeys("C:\\Users\\Enrique\\Desktop\\testfile.txt");
+        name = 'prueba.csv'
+        f = open(os.path.join(TutoBasics.settings.BASE_DIR,'documents',name),"rb")
+
+        file_data = {'file':SimpleUploadedFile(f.name,f.read())}
+        data = {}
+        form = UploadFileForm(data,file_data)
+        self.assertTrue(form.is_valid())
+        
 
         #She upload her wonderful csv
 

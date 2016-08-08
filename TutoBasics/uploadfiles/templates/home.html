@@ -6,6 +6,16 @@
     <body>
         <h1>Welcome to my Data Loader!</h1>
         <h3>Here you'll be able to load your files and, maybe visualize them.</h3>
+        <form action="{% url "home" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
+            <p>
+                {{ form.file.errors }}
+                {{ form.file }}
+            </p>
 
+            <p><input type="submit" value="Upload"/></p>
+        </form>
     </body>
 </html>

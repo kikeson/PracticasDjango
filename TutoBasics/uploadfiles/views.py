@@ -14,7 +14,12 @@ def home_page(request):
             newdoc.save()
 
             # Redirect to the document list after POST
-            # return HttpResponseRedirect(reverse('home_page'))
+            return render(
+                request,
+                'home.html',
+                {'form': form
+                    ,'upload_ok': 1  }
+            )
     else:
         form = UploadFileForm()
         # A empty, unbound form

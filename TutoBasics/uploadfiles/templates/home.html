@@ -15,7 +15,10 @@
                 {{ form.file }}
             </p>
 
-            <p><input type="submit" value="Upload"/></p>
+            <p><input id="upload_submit" type="submit" value="Upload"/></p>
+            {% if upload_ok %}
+                <span id="upload_ok">upload_ok</span>
+            {% endif %}
         </form>
     </body>
 </html>

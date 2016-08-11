@@ -4,21 +4,24 @@ from uploadfiles.models import Document
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-
+import os, TutoBasics
 # Create your views here.
 def home_page(request):
+    listfiles = Document.objects.all()
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
+        
         if form.is_valid():
             newdoc = Document(docfile=request.FILES['file'])
             newdoc.save()
-
+            listfiles = Document.objects.all()
             # Redirect to the document list after POST
             return render(
                 request,
                 'home.html',
                 {'form': form
-                    ,'upload_ok': 1  }
+                    ,'upload_ok': 1
+                    ,'listfiles':listfiles  }
             )
     else:
         form = UploadFileForm()
@@ -27,5 +30,5 @@ def home_page(request):
     return render(
         request,
         'home.html',
-        {'form': form}
+        {'form': form, 'listfiles':listfiles}
     )

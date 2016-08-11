@@ -19,6 +19,13 @@
             {% if upload_ok %}
                 <span id="upload_ok">upload_ok</span>
             {% endif %}
+            <table id="id_list_table">
+                {% for f in listfiles %}
+                    <tr>                    
+                        <td>{{ f }}</td>                    
+                    </tr>
+                {% endfor %}                                 
+            </table>
         </form>
     </body>
 </html>

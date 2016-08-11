@@ -6,7 +6,7 @@ import django.core.files
 import os
 import TutoBasics
 from uploadfiles.forms import UploadFileForm
-
+from datetime import date
 
 
 class NewVisitorTest(LiveServerTestCase):
@@ -20,13 +20,14 @@ class NewVisitorTest(LiveServerTestCase):
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(row_text, [row.text for row in rows])
+        self.assertIn(('documents/%s/%s/%s/' % (date.today().year,str(date.today().month).zfill(2),str(date.today().day).zfill(2))+row_text), [row.text for row in rows])
 
     def check_upload_file_ok(self,name):
         file_element = self.browser.find_element_by_id('id_file')
         file_element.send_keys(os.path.join(TutoBasics.settings.BASE_DIR,'documents',name))
         self.browser.find_element_by_id('upload_submit').click()
-        file_element = self.browser.find_element_by_id('upload_ok')           
+        file_element = self.browser.find_element_by_id('upload_ok')
+
 
     def test_can_load_file_and_display_content(self):
         #Manuela visits page and loads correctly

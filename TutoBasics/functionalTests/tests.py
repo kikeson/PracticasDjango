@@ -20,11 +20,13 @@ class NewVisitorTest(LiveServerTestCase):
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(('documents/%s/%s/%s/' % (date.today().year,str(date.today().month).zfill(2),str(date.today().day).zfill(2))+row_text), [row.text for row in rows])
+        self.assertIn(row_text, [row.text for row in rows])
 
-    def check_upload_file_ok(self,name):
+    def check_upload_file_ok(self,name,description):
         file_element = self.browser.find_element_by_id('id_file')
         file_element.send_keys(os.path.join(TutoBasics.settings.BASE_DIR,'documents',name))
+        desc_element = self.browser.find_element_by_id('id_description')
+        desc_element.send_keys(description)
         self.browser.find_element_by_id('upload_submit').click()
         file_element = self.browser.find_element_by_id('upload_ok')
 
@@ -38,16 +40,20 @@ class NewVisitorTest(LiveServerTestCase):
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('Data Loader', header_text)
 
-        #She is invited to select a file from her computer
+        #She is invited to select a file from her computer and describe it
         file_element = self.browser.find_element_by_id('id_file')
+        file_element = self.browser.find_element_by_id('id_description')
      
 
         #She upload her wonderful csv
+        #She can describe the file
         #When she selects the file she gets a message that the loading was ok        
         name1 = 'prueba.csv'
+        description1 = 'My first description'
         name2 = 'prueba2.csv'
-        self.check_upload_file_ok(name1)
-        self.check_upload_file_ok(name2)
+        description2 = 'Look! I described again'
+        self.check_upload_file_ok(name1,description1)
+        self.check_upload_file_ok(name2,description2)
 
 
         # f = open(os.path.join(TutoBasics.settings.BASE_DIR,'documents',name),"rb")
@@ -61,8 +67,14 @@ class NewVisitorTest(LiveServerTestCase):
 
 
         # She can see the list of files she has uploaded
-        self.check_for_row_in_list_table(name1)        
-        self.check_for_row_in_list_table(name2)
+        self.check_for_row_in_list_table(description1)        
+        self.check_for_row_in_list_table(description2)
+
+        # She can see options to remove or load the files
+        self.browser.find_elements_by_class_name('remove_item')
+
+        self.browser.find_elements_by_class_name('load_item')        
+
 
         # She can select a file and load its content
 

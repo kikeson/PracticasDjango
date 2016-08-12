@@ -9,6 +9,11 @@
         <form action="{% url "home" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.description.label_tag }} {{ form.description.help_text }}</p>
+            <p>
+                {{ form.description.errors }}
+                {{ form.description }}
+            </p>>    
             <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
             <p>
                 {{ form.file.errors }}
@@ -22,7 +27,8 @@
             <table id="id_list_table">
                 {% for f in listfiles %}
                     <tr>                    
-                        <td>{{ f }}</td>                    
+                        <td>{{ f }}</td>
+                        <td></td>                    
                     </tr>
                 {% endfor %}                                 
             </table>

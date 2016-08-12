@@ -12,7 +12,7 @@ def home_page(request):
         form = UploadFileForm(request.POST, request.FILES)
         
         if form.is_valid():
-            newdoc = Document(docfile=request.FILES['file'])
+            newdoc = Document(description=request.POST['description'],docfile=request.FILES['file'])
             newdoc.save()
             listfiles = Document.objects.all()
             # Redirect to the document list after POST

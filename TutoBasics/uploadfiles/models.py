@@ -2,7 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Document(models.Model):
+	description = models.CharField(default='',max_length=100)
 	docfile = models.FileField(upload_to='documents/%Y/%m/%d')	
 
+
 	def __str__(self):
-		return "%s" % (self.docfile.name)
+		return "%s" % (self.description)

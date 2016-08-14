@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>My Data Loader</title>
+    </head>
+    <body>
+        <h1>Congrats your file was uploaded!</h1>
+        <h3>Now you have to decide if you want to continue uploading files.</h3>
+        <form method="POST" action="/">
+			{% csrf_token %}
+        	<p><input id="return_uploader" type="submit" value="Return"/></p>
+        </form>
+    </body>

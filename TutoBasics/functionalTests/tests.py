@@ -28,10 +28,17 @@ class NewVisitorTest(LiveServerTestCase):
         desc_element = self.browser.find_element_by_id('id_description')
         desc_element.send_keys(description)
         self.browser.find_element_by_id('upload_submit').click()
-        file_element = self.browser.find_element_by_id('upload_ok')
+        # She gets a message confirming correct upload
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('Congrats',header_text)
+
+        # Chooses to return to uploads
+        self.browser.find_element_by_id('return_uploader').click()
+
 
 
     def test_can_load_file_and_display_content(self):
+        
         #Manuela visits page and loads correctly
         self.browser.get(self.live_server_url)
 
@@ -71,9 +78,8 @@ class NewVisitorTest(LiveServerTestCase):
         self.check_for_row_in_list_table(description2)
 
         # She can see options to remove or load the files
-        self.browser.find_elements_by_class_name('remove_item')
-
-        self.browser.find_elements_by_class_name('load_item')        
+        remove_btn = self.browser.find_elements_by_class_name('remove_item')
+        load_btn = self.browser.find_elements_by_class_name('load_item')        
 
 
         # She can select a file and load its content

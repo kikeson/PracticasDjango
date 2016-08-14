@@ -16,13 +16,15 @@ def home_page(request):
             newdoc.save()
             listfiles = Document.objects.all()
             # Redirect to the document list after POST
-            return render(
-                request,
-                'home.html',
-                {'form': form
-                    ,'upload_ok': 1
-                    ,'listfiles':listfiles  }
-            )
+
+            return HttpResponseRedirect("uploadfiles/upload_ok/")    
+            # return render(
+            #     request,
+            #     'home.html',
+            #     {'form': form
+            #         ,'upload_ok': 1
+            #         ,'listfiles':listfiles  }
+            # )
     else:
         form = UploadFileForm()
         # A empty, unbound form
@@ -32,3 +34,8 @@ def home_page(request):
         'home.html',
         {'form': form, 'listfiles':listfiles}
     )
+
+def upload_ok(request):
+    if request.method == 'POST':
+        return HttpResponseRedirect('/')
+    return render(request,'upload_ok/')

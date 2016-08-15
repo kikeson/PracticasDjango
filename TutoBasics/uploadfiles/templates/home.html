@@ -28,7 +28,8 @@
                 {% for f in listfiles %}
                     <tr>                    
                         <td>{{ f }}</td>
-                        <td></td>                    
+                        <td><a class='remove_item' href="remove_item/{{ f.id }}">Remove item</a>
+                        <td><a class='load_item' href='load_item/{{ f.id }}'>Load item</a>
                     </tr>
                 {% endfor %}                                 
             </table>

@@ -17,7 +17,7 @@ def home_page(request):
             listfiles = Document.objects.all()
             # Redirect to the document list after POST
 
-            return HttpResponseRedirect("uploadfiles/upload_ok/")    
+            return HttpResponseRedirect("upload_ok/")    
             # return render(
             #     request,
             #     'home.html',

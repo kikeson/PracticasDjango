@@ -39,3 +39,9 @@ def upload_ok(request):
     if request.method == 'POST':
         return HttpResponseRedirect('/')
     return render(request,'upload_ok/')
+
+def confirm_delete(request, file_id):
+    if request.method == 'POST':
+        print('Hello')
+        return HttpResponseRedirect('/')
+    return render(request, 'confirm_delete/')

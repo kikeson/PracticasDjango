@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>My Data Loader</title>
+    </head>
+    <body>
+        <h1>Are you sure you want to delete the file?</h1>
+        <h3>Now you have to decide wether that was a good idea.</h3>
+        <form action="{% url 'confirm_delete' %}" method="POST">
+			{% csrf_token %}
+        	<p><input id="delete_ok" type="submit" value="Yes!"/><input id="delete_cancel" type="submit" value="No!"/></p>
+        </form>
+    </body>

@@ -40,8 +40,11 @@ def upload_ok(request):
         return HttpResponseRedirect('/')
     return render(request,'upload_ok/')
 
-def confirm_delete(request, file_id):
+def confirm_delete(request, datafile):
+    docid = Document.objects.get(id=datafile)
+    context = {"datafile" : datafile, "docid" : docid}
     if request.method == 'POST':
-        print('Hello')
-        return HttpResponseRedirect('/')
-    return render(request, 'confirm_delete/')
+        if 'delete_ok' in request.POST:
+            docid.delete()
+        return HttpResponseRedirect('/uploadfiles')
+    return render(request, 'confirm_delete/', context)

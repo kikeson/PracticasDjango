@@ -4,7 +4,7 @@ from uploadfiles.models import Document
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-import os, TutoBasics
+import os, TutoBasics, html
 # Create your views here.
 def home_page(request):
     listfiles = Document.objects.all()
@@ -48,3 +48,20 @@ def confirm_delete(request, datafile):
             docid.delete()
         return HttpResponseRedirect('/uploadfiles')
     return render(request, 'confirm_delete/', context)
+
+def load_document(request, datafile):
+    docid = Document.objects.get(id=datafile) 
+    lines = sum(1 for row in docid.docfile)  # fileObject is your csv.reader
+    content_text = []
+    if request.method == 'POST':
+        if 'load_ok' in request.POST:
+                docid.docfile.open(mode='r')
+                content_text = docid.docfile.read().decode(errors='replace')
+                print(type(content_text))
+                content_text.replace("&","&amp;")
+                html.escape(content_text)
+                docid.docfile.close()
+        else:
+            return HttpResponseRedirect('/uploadfiles')
+    context = {"datafile" : datafile, "docid" : docid, "lines" : lines, "content_text" : content_text}
+    return render(request, 'load_document/', context)    

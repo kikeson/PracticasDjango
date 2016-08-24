@@ -10,10 +10,14 @@
         <title>My Data Loader</title>
     </head>
     <body>
-        <h1>Congrats your file was uploaded!</h1>
-        <h3>Now you have to decide if you want to continue uploading files.</h3>
-        <form method="POST" action="/uploadfiles/">
+        <h1>The file has {{ lines }} lines.</h1>
+        <h3>Do you want to display its contents?</h3>
+        <form action="{% url 'load_document' datafile %}" method="POST">
 			{% csrf_token %}
-        	<p><input id="return_uploader" type="submit" value="Return"/></p>
+        	<p><input name="load_ok" type="submit" value="Yes!"/><input id="load_cancel" type="submit" value="No!"/></p>
         </form>
+      
+        {% if content_text %}
+                <pre>{{ content_text|linebreaksbr }} </pre>
+        {% endif %}
     </body>

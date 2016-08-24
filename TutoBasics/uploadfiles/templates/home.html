@@ -1,3 +1,9 @@
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
     <head>
         <title>My Data Loader</title>
@@ -24,13 +30,21 @@
             {% if upload_ok %}
                 <span id="upload_ok">upload_ok</span>
             {% endif %}
+
+            <br/>
             <table id="id_list_table">
+                    <tr>
+                        <th>Description</th>
+                        <th>File</th>
+                        <th>Delete</th>
+                        <th>Load</th>
+                    </tr>
                 {% for f in listfiles %}
                     <tr>                    
                         <td>{{ f }}</td>
                         <td>{{ f.docfile }}</td>
                         <td><a class='remove_item' href="confirm_delete/{{ f.id }}">Remove item</a>
-                        <td><a class='load_item' href='load_item/{{ f.id }}'>Load item</a>
+                        <td><a class='load_item' href='load_document/{{ f.id }}'>Load item</a>
                     </tr>
                 {% endfor %}                                 
             </table>
